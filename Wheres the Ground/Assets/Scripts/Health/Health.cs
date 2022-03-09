@@ -8,16 +8,24 @@ public class Health : MonoBehaviour
     private bool dead;
     [SerializeField] private float startingHealth;
     public float currentHealth {get; private set;}
+    public Movement MyMovement;
+
+    
 
     private void Awake(){
         currentHealth=startingHealth;
 
     }
+    
     public void TakeDamage(float _damage){
         currentHealth = Mathf.Clamp(currentHealth-_damage,0,startingHealth);
         
         if (currentHealth>0){
-
+            //Let player know he got spiked
+            //reset position and take a heart
+            MyMovement.move=false;
+            Invoke("Delay", 5);
+            
 
         }else{
             if (!dead){
@@ -29,5 +37,14 @@ public class Health : MonoBehaviour
         }
 
     }
+    void Delay(){
+        
+        this.gameObject.transform.position = new Vector2(0,-9);
+        MyMovement.move=true;
+        return;
+    }
+
+
+
    
 }
